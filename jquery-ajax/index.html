@@ -1,0 +1,86 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous">
+    </script>
+   
+    <script>
+        $(document).ready(() => {
+            $("#btnTraer").click(() => {
+                const url = "https://themealdb.com/api/json/v1/1/categories.php";
+                $.get(url, (data) => {
+                    console.log(data)
+                    let categorias = data.categories;
+                    //array[10]; de 0 a 9
+                    //"idCategory": "1",
+                    //"strCategory": "Beef",
+                    //"strCategoryThumb": "https://www.themealdb.com/images/category/beef.png",
+                    //"strCategoryDescription": "Beef is the culinary name for meat from cattle, particularly skeletal muscle. Humans have been eating beef since prehistoric times.[1] Beef is a source of high-quality protein and essential nutrients.[2]"
+                    
+
+                    /*
+                     {
+                         "categories": [
+                             {
+                                "idCategory": "string",
+                                "strCategory": "string",
+                                "strCategoryThumb": "string",
+                                "strCategoryDescription": "string"
+                            }
+                         ]
+                     }
+                    */
+                    $.each(categorias, (index, item) => {
+                        let nombre_categoria = item.strCategory;
+                        let imagen = item.strCategoryThumb;
+                        let descripcion = item.strCategoryDescription;
+
+                        $("#body_categoria").append("<tr><td><img width='150px' src='" + imagen + "'></td>" +
+                                                    "<td>" + nombre_categoria + "</td>" +
+                                                    "<td>" + descripcion + "</td></tr>");
+                    }) 
+                });
+            });
+        });
+
+
+       
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <button id="btnTraer" class="btn btn-primary">
+            Traer categorias
+        </button>
+        <br>
+        <br>
+        <br>
+        <table class="table responsive">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Categoria</th>
+                    <th>Descripcion</th>
+                </tr>
+            </thead>
+            <tbody id="body_categoria">
+
+            </tbody>
+        </table>
+    </div>
+
+
+</body>
+
+</html>
