@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>
+    CREAR PRODUCTO
+</h1>
+{{post}}
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+
+        <label for="nombre">Nombre</label>
+        <input id="nombre" type="text" name="nombre" class="form-control" >
+    </div>
+    <div class="form-group">
+
+        <label for="sku">SKU</label>
+        <input id="sku" type="number" name="sku" class="form-control">
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Enviar</button>
+    </div>
+</form>
+
+{% endblock body %}

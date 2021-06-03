@@ -1,0 +1,56 @@
+from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseNotAllowed
+from .models import Producto
+# Create your views here.
+
+def listar(request):
+    productos = Producto.objects.all()
+    contexto = {
+        "productos": productos
+    }
+    return render(request, 'productos/listar.html', contexto)
+
+def editar(request, id):
+    if request.method == 'GET':
+        producto = Producto.objects.get(id=id)
+        return render(request,'productos/editar.html', {
+            "producto": producto
+        })
+    elif request.method == 'POST': 
+        producto = Producto.objects.get(id=id)
+        data=request.POST
+        producto.nombre = data["nombre"]
+        producto.sku =data["sku"]
+        producto.save()
+        return render(request, 'productos/editar.html', {
+            "mensaje": "EEEXITO",
+            "producto": producto
+        })
+
+def crear(request):
+
+    if request.method == "GET":
+        return render(request, "productos/crear.html", {})
+    elif request.method == "POST":
+        request_post = request.POST
+
+        producto = Producto()
+        producto.nombre = request_post["nombre"]
+        producto.sku = request_post["sku"]
+
+        producto.save()
+
+        return render(request, 'productos/crear.html', {
+            "post": producto
+        })
+    else:
+        return HttpResponseNotAllowed(["POST","GET"])
+
+def index(request):
+    titulo = ["askdcjsdvkdfjkhf","segundo titulo", "tercer titulo"]
+    es_verdadero = True
+    return render(request, 'productos/index.html', {
+        "titulos": titulo,
+        "es_verdadero": es_verdadero,
+        "titulo_pagina": "TITULO DESDE CONTEXTO"
+    })

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block body %}
+        <h1>
+            Mi titulo
+        </h1>
+        <ul>
+            {% for producto in object_list %}
+            <li>
+                <a href="{% url 'mi_modulo:editar' producto.id %}"> {{producto}}</a>
+               </li>
+            {% endfor %}
+        </ul>
+   
+{% endblock body %}

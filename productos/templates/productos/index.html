@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+
+{% endblock head %}
+
+{% block body %}
+
+        {% if es_verdadero%}
+        <p>Es verdadero</p>
+        {% else %}
+        <button>es falso</button>
+        {% endif %}
+        {% for titulo in titulos  %}
+        <h1>
+            {{titulo}}
+        </h1>
+        {% endfor %}
+{% endblock body %}
+
+{% block body2 %}
+<img src="{% static 'productos/imagen_de_prueba.png' %}">
+
+<script src="{% static 'perfil/app.js' %}">
+</script>
+{% endblock body2 %}
+556
