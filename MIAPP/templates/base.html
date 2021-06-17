@@ -23,9 +23,27 @@
         <li>
             <a href="{% url 'mi_modulo:listar' %}">Listar</a>
         </li>
+        {% if perms.productos.add_producto %}
+        
         <li>
             <a href="{% url 'mi_modulo:crear' %}">Crear</a>
         </li>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <li>
+            <a href="{% url 'user:perfil' %}">Perfil</a>
+        </li>
+        <li>
+            <a href="{% url 'user:logout' %}">Cerrar sesion</a>
+        </li>
+        
+        {% else %}
+        
+        <li>
+            <a href="{% url 'user:login' %}">Iniciar sesion</a>
+        </li>
+        
+        {% endif %}
     </ul>
     <div class="container">
 

@@ -16,11 +16,9 @@ Including another URLconf
 from django.urls import path
 from . import views
 #www.miapp.cl/productos/
-app_name="mi_modulo"
+app_name="user"
 urlpatterns = [
-    path('listar/', views.ListarView.as_view(), name='listar'),
-    path('crear/', views.crear, name='crear'),
-    path('editar/<int:pk>', views.ProductoUpdateView.as_view(), name='editar'),
-    path('', views.IndexView.as_view(), name='index'),
-    path('api/producto', views.lista_productos, name="lista_productos")
+    path('login/', views.LoginView.as_view() , name='login'),
+    path('logout/', views.Logout.as_view() , name='logout'),
+    path('perfil/', views.Perfil.as_view() , name='perfil'),
 ]

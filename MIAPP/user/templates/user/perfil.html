@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+
+
+{% block body %}
+{{usuario}}
+{{permisos}}
+
+
+{% if perms.productos.add_categoria %}
+<h1>Tiene permisos de productos</h1>
+{% endif %}
+{% endblock body %}

@@ -1,10 +1,16 @@
+import re
+from django.db.models import manager
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotAllowed
+from django.urls import reverse
+from django.http import HttpResponse, HttpResponseNotAllowed, response
 from .models import Producto
-from django.views.generic import ListView, DetailView, UpdateView
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.views.generic import ListView, DetailView, UpdateView, View
+from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
 
 class ListarView(ListView):
+    permission_required='productos.view_producto'
     model = Producto
     template_name = 'productos/listar.html'
 
@@ -20,6 +26,12 @@ class ProductoUpdateView(UpdateView):
     success_url = '/'
 
 
+class IndexView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'productos/index.html', {})
+
+@login_required
+@permission_required('productos.add_producto', raise_exception=True)
 def crear(request):
 
     if request.method == "GET":
@@ -47,3 +59,16 @@ def index(request):
         "es_verdadero": es_verdadero,
         "titulo_pagina": "TITULO DESDE CONTEXTO"
     })
+
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .serializers import ProductoSerializer
+
+@csrf_exempt
+@api_view(["GET", "POST"])
+def lista_productos(request):
+    if request.method == 'GET':
+        prodcuto = Producto.objects.all()
+        serializer = ProductoSerializer(prodcuto, many=True)
+        return Response(serializer.data)
